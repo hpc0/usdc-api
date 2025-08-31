@@ -35,7 +35,7 @@ To run this application, you will need to have Docker and Docker Compose install
    * Start the usdc\_db and usdc\_app containers.  
    * Start the API server at http://localhost:3000.  
 
-   For succesive 
+   
 4. Access the API.  
    Once the containers are up and running, you can access the API at http://localhost:3000. An interactive API documentation page is available at http://localhost:3000/api.
 
