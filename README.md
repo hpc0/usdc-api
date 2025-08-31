@@ -25,7 +25,6 @@ To run this application, you will need to have Docker and Docker Compose install
    **Note:** You must replace <YOUR\_API\_KEY> with a valid infura api key.  
 3. Run the application.  
    Use the following command to create a fresh container and volume.  
-   docker-compose down \-v && docker-compose up \--build
 
 
    The docker-compose up \--build
