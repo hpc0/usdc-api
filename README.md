@@ -14,19 +14,20 @@ To run this application, you will need to have Docker and Docker Compose install
 ### **Step-by-Step Guide**
 
 1. Create the environment file.  
-   Create a new file named .env.docker in the root of your project with the following content. This file will be used by the Docker container at runtime.  
-   DATABASE\_URL=postgresql://usdc:usdc@usdc_db:5432/usdc\_indexer
-   ETH\_RPC\_URL=https://mainnet.infura.io/v3/\<YOUR\_API\_KEY\>
-   USDC\_CONTRACT=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
-   MAX\_BLOCKS=3
-   MAX\_INDEXER\_SIZE=1000
+   Create a new file named .env.docker in the root of your project with the following content. This file will be used by the Docker container at runtime.
+   
+   DATABASE\_URL=postgresql://usdc:usdc@usdc_db:5432/usdc\_indexer  
+   ETH\_RPC\_URL=https://mainnet.infura.io/v3/\<YOUR\_API\_KEY\>  
+   USDC\_CONTRACT=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48  
+   MAX\_BLOCKS=3  
+   MAX\_INDEXER\_SIZE=1000  
    
    \_URL=postgresql://usdc:usdc@db:5432/usdc\_indexer  
    USDC\_CONTRACT=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48  
    ETH\_RPC\_URL=\<YOUR\_ETHEREUM\_RPC\_URL\>
 
    **Note:** You must replace \<YOUR\_API\_KEY\> with a valid infura api key.  
-2. Run the application.  
+3. Run the application.  
    Use the following command to create a fresh container and volume.  
    docker-compose down \-v && docker-compose up \--build
 
@@ -39,7 +40,7 @@ To run this application, you will need to have Docker and Docker Compose install
    * Start the API server at http://localhost:3000.  
 
    For succesive 
-3. Access the API.  
+4. Access the API.  
    Once the containers are up and running, you can access the API at http://localhost:3000. An interactive API documentation page is available at http://localhost:3000/api.
 
 ## **2\. API Documentation**
