@@ -17,12 +17,12 @@ To run this application, you will need to have Docker and Docker Compose install
    Create a new file named .env.docker in the root of your project with the following content. This file will be used by the Docker container at runtime.
    
    DATABASE\_URL=postgresql://usdc:usdc@usdc_db:5432/usdc\_indexer  
-   ETH\_RPC\_URL=https://mainnet.infura.io/v3/\<YOUR\_API\_KEY\>  
+   ETH\_RPC\_URL=https://mainnet.infura.io/v3/<YOUR\_API\_KEY>  
    USDC\_CONTRACT=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48  
    MAX\_BLOCKS=3  
    MAX\_INDEXER\_SIZE=1000  
 
-   **Note:** You must replace \<YOUR\_API\_KEY\> with a valid infura api key.  
+   **Note:** You must replace <YOUR\_API\_KEY> with a valid infura api key.  
 3. Run the application.  
    Use the following command to create a fresh container and volume.  
    docker-compose down \-v && docker-compose up \--build
