@@ -21,10 +21,6 @@ To run this application, you will need to have Docker and Docker Compose install
    USDC\_CONTRACT=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48  
    MAX\_BLOCKS=3  
    MAX\_INDEXER\_SIZE=1000  
-   
-   \_URL=postgresql://usdc:usdc@db:5432/usdc\_indexer  
-   USDC\_CONTRACT=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48  
-   ETH\_RPC\_URL=\<YOUR\_ETHEREUM\_RPC\_URL\>
 
    **Note:** You must replace \<YOUR\_API\_KEY\> with a valid infura api key.  
 3. Run the application.  
