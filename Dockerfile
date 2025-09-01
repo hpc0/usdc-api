@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install build dependencies for native node modules
 # This is a good practice to handle all potential C++ bindings
-RUN apk add --no-cache git python3 make g++
+# RUN apk add --no-cache git python3 make g++
 
 # Copy package.json and install all dependencies (including dev)
 COPY package*.json ./
