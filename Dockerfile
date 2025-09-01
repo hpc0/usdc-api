@@ -29,7 +29,7 @@ WORKDIR /app
 
 # NOTE: Alpine is a very minimal OS. The Prisma query engine needs libssl to run.
 # Without it, you'll get a runtime error.
-# RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl
 
 # Copy the entire node_modules directory from the builder stage.
 # This ensures that all dependencies, including the Prisma query engine,
