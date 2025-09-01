@@ -1,81 +1,101 @@
-# **USDC Indexer and API**
+# **USDC Indexer & API**
 
-This project provides a robust API for querying USDC token transfers on the Ethereum blockchain. It features a self-contained indexing service that listens for and records Transfer events, making the data available through a set of REST endpoints.
+This project provides an API for querying **USDC token transfers** on the Ethereum blockchain.  
+It includes a self-contained indexing service that listens for `Transfer` events and exposes the data through a set of RESTful endpoints.
 
-## **1\. Setup Instructions**
+---
 
-To run this application, you will need to have Docker and Docker Compose installed.
+## **1. Setup Instructions**
 
 ### **Prerequisites**
 
-* [Docker](https://www.docker.com/products/docker-desktop)  
-* [Docker Compose](https://docs.docker.com/compose/install/)
+Before you begin, make sure you have the following installed:
+
+- [Docker](https://www.docker.com/products/docker-desktop)  
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ### **Step-by-Step Guide**
 
-1. Create the environment file.  
-   Create a new file named .env.docker in the root of your project with the following content. This file will be used by the Docker container at runtime.
-   
-   DATABASE\_URL=postgresql://usdc:usdc@usdc_db:5432/usdc\_indexer  
-   ETH\_RPC\_URL=https://mainnet.infura.io/v3/<YOUR\_API\_KEY>  
-   USDC\_CONTRACT=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48  
-   MAX\_BLOCKS=3  
-   MAX\_INDEXER\_SIZE=1000  
+1. **Create the environment file**  
+   In the project root, create a file named `.env.docker` with the following content:
 
-   **Note:** You must replace <YOUR\_API\_KEY> with a valid infura api key.  
-3. Run the application.  
-   Use the following command to create a fresh container and volume.  
+   ```bash
+   DATABASE_URL=postgresql://usdc:usdc@usdc_db:5432/usdc_indexer
+   ETH_RPC_URL=https://mainnet.infura.io/v3/<YOUR_API_KEY>
+   USDC_CONTRACT=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
+   MAX_BLOCKS=3
+   MAX_INDEXER_SIZE=1000
+   ```
 
+   > 🔑 **Note:** Replace `<YOUR_API_KEY>` with your valid Infura API key.
 
-   The docker-compose up \--build
-   
+2. **Start the application**  
+   Build and launch the containers with:
 
-   * Build the usdc\_app Docker image.  
-   * Start the usdc\_db and usdc\_app containers.  
-   * Start the API server at http://localhost:3000.  
+   ```bash
+   docker-compose down -v && docker-compose up --build
+   ```
 
-   
-4. Access the API.  
-   Once the containers are up and running, you can access the API at http://localhost:3000. An interactive API documentation page is available at http://localhost:3000/api.
+   This will:
+   - Build the `usdc_app` Docker image  
+   - Start the `usdc_db` and `usdc_app` containers  
+   - Run the API server at [http://localhost:3000](http://localhost:3000)
 
-## **2\. API Documentation**
+3. **Access the API**  
+   Once running, the API is available at:
 
-### **Get recent transfers**
+   - Base URL: [http://localhost:3000](http://localhost:3000)  
+   - Interactive docs: [http://localhost:3000/api](http://localhost:3000/api)
 
-* GET /transfers  
-* **Description:** Fetches a list of recent USDC transfers from the database.  
-* **Query Parameters:**  
-  * from (optional): Filter transfers by sender address.  
-  * to (optional): Filter transfers by recipient address.  
-  * limit (optional): Maximum number of transfers to return (default: 20).
+---
 
-### **Get address balance**
+## **2. API Documentation**
 
-* GET /transfers/balance/:address  
-* **Description:** Fetches the real-time USDC balance of a given Ethereum address by calling the blockchain RPC.  
-* **Path Parameters:**  
-  * address (required): The Ethereum address to query.
+### 🔹 Get Recent Transfers
+- **Endpoint:** `GET /transfers`  
+- **Description:** Returns a list of recent USDC transfers.  
+- **Query Parameters:**  
+  - `from` (optional) – filter by sender address  
+  - `to` (optional) – filter by recipient address  
+  - `limit` (optional, default: 20) – number of transfers to return  
 
-### **Get transfer history**
+---
 
-* GET /transfers/history/:address  
-* **Description:** Fetches a list of recent transfers where the given address was either the sender or the recipient.  
-* **Path Parameters:**  
-  * address (required): The Ethereum address to fetch history for.  
-* **Query Parameters:**  
-  * limit (optional): Maximum number of transfers to return (default: 20).
+### 🔹 Get Address Balance
+- **Endpoint:** `GET /transfers/balance/:address`  
+- **Description:** Fetches the **real-time USDC balance** of a given Ethereum address using blockchain RPC.  
+- **Path Parameter:**  
+  - `address` (required) – Ethereum address to query  
 
-### **Simulate a transfer (Demo)**
+---
 
-* POST /transfers/transfer  
-* **Description:** This endpoint simulates a USDC transfer to demonstrate how a transaction would be constructed. It does **not** broadcast an actual transaction to the blockchain.  
-* **Request Body:**  
-  * fromPk (required): The private key of the sender's wallet.  
-  * to (required): The recipient's Ethereum address.  
-  * amount (required): The amount of USDC to transfer (e.g., "100.5").
+### 🔹 Get Transfer History
+- **Endpoint:** `GET /transfers/history/:address`  
+- **Description:** Returns transfers where the given address was either sender or recipient.  
+- **Path Parameter:**  
+  - `address` (required) – Ethereum address  
+- **Query Parameter:**  
+  - `limit` (optional, default: 20) – number of transfers to return  
 
-## **3\. Fault Tolerance Approach**
+---
 
-* **Automatic Recovery:** The system is designed to perform the re-indexing process always by fetching from the latest known data, ensuring that an interrupted fetch does not lead to a gap in your data. It is not a problem if a previous fetch was interrupted.
+### 🔹 Simulate a Transfer (Demo)
+- **Endpoint:** `POST /transfers/transfer`  
+- **Description:** Demonstrates how a USDC transfer transaction is constructed.  
+  ⚠️ *This does **not** broadcast to the blockchain.*  
+- **Request Body:**  
+  - `fromPk` (required) – sender’s private key  
+  - `to` (required) – recipient Ethereum address  
+  - `amount` (required) – amount of USDC to transfer (e.g., `"100.5"`)  
 
-* **Data Integrity:** The indexer prioritizes data integrity by first successfully fetching and writing newer records to the database. Only after this new data is confirmed as stored does the system delete older records to maintain the configured index size.
+---
+
+## **3. Fault Tolerance & Data Integrity**
+
+- **Automatic Recovery**  
+  The indexer always resumes from the latest known block, ensuring that interruptions never create gaps in the data.  
+
+- **Data Integrity First**  
+  New records are written and confirmed before older ones are pruned, keeping the database consistent while respecting the configured index size.  
+
+---
