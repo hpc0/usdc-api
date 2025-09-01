@@ -1,7 +1,7 @@
 # **USDC Indexer & API**
 
 This project provides an API for querying **USDC token transfers** on the Ethereum blockchain.  
-It includes a self-contained indexing service that listens for `Transfer` events and exposes the data through a set of RESTful endpoints.
+It includes an indexing service that listens for `Transfer` events and exposes the data through a set of RESTful endpoints.
 
 ---
 
@@ -27,13 +27,13 @@ Before you begin, make sure you have the following installed:
    MAX_INDEXER_SIZE=1000
    ```
 
-   > 🔑 **Note:** Replace `<YOUR_API_KEY>` with your valid Infura API key.
+   > **Note:** Replace `<YOUR_API_KEY>` with your valid Infura API key.
 
 2. **Start the application**  
    Build and launch the containers with:
 
    ```bash
-   docker-compose down -v && docker-compose up --build
+   docker-compose up --build
    ```
 
    This will:
@@ -51,7 +51,7 @@ Before you begin, make sure you have the following installed:
 
 ## **2. API Documentation**
 
-### 🔹 Get Recent Transfers
+### Get Recent Transfers
 - **Endpoint:** `GET /transfers`  
 - **Description:** Returns a list of recent USDC transfers.  
 - **Query Parameters:**  
@@ -61,7 +61,7 @@ Before you begin, make sure you have the following installed:
 
 ---
 
-### 🔹 Get Address Balance
+### Get Address Balance
 - **Endpoint:** `GET /transfers/balance/:address`  
 - **Description:** Fetches the **real-time USDC balance** of a given Ethereum address using blockchain RPC.  
 - **Path Parameter:**  
@@ -69,7 +69,7 @@ Before you begin, make sure you have the following installed:
 
 ---
 
-### 🔹 Get Transfer History
+### Get Transfer History
 - **Endpoint:** `GET /transfers/history/:address`  
 - **Description:** Returns transfers where the given address was either sender or recipient.  
 - **Path Parameter:**  
@@ -79,10 +79,10 @@ Before you begin, make sure you have the following installed:
 
 ---
 
-### 🔹 Simulate a Transfer (Demo)
+### Simulate a Transfer (Demo)
 - **Endpoint:** `POST /transfers/transfer`  
 - **Description:** Demonstrates how a USDC transfer transaction is constructed.  
-  ⚠️ *This does **not** broadcast to the blockchain.*  
+  *This does **not** broadcast to the blockchain.*  
 - **Request Body:**  
   - `fromPk` (required) – sender’s private key  
   - `to` (required) – recipient Ethereum address  
